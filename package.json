@@ -1,0 +1,13 @@
+{
+  "name": "sece-rag-chatbot",
+  "version": "1.0.0",
+  "description": "RAG Chatbot for Sri Eshwar College of Engineering (SECE) using SentenceTransformers, FAISS, and Groq Llama 3.3.",
+  "scripts": {
+    "dev": "cd frontend && next dev",
+    "build": "cd frontend && next build",
+    "start": "cd frontend && next start"
+  },
+  "keywords": ["rag", "chatbot", "groq", "faiss", "sece", "vercel"],
+  "author": "SECE Developer",
+  "license": "MIT"
+}

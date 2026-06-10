@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SECE RAG Chatbot - Sri Eshwar College of Engineering</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Navigation Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Sri Eshwar</h1>
+                    <span class="subtitle">College of Engineering</span>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="https://sece.ac.in" target="_blank" class="nav-link" id="link-website">
+                    <i class="fa-solid fa-globe"></i> <span>sece.ac.in</span>
+                </a>
+                <a href="https://alumni.sece.ac.in" target="_blank" class="nav-link" id="link-alumni">
+                    <i class="fa-solid fa-users"></i> <span>Alumni</span>
+                </a>
+                <a href="https://campustour.sece.ac.in" target="_blank" class="nav-link" id="link-tour">
+                    <i class="fa-solid fa-map-location-dot"></i> <span>Campus Tour</span>
+                </a>
+                <a href="https://erp.sece.ac.in" target="_blank" class="nav-link highlight" id="link-erp">
+                    <i class="fa-solid fa-laptop-code"></i> <span>ERP Login</span>
+                </a>
+            </nav>
+            <div class="theme-toggle-container">
+                <span class="tnea-badge">TNEA Code: 2739</span>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Left Side: Chat Workspace -->
+            <section class="chat-section">
+                <div class="chat-wrapper">
+                    <!-- Chat Messages Area -->
+                    <div class="chat-messages" id="chat-messages-container">
+                        <!-- Welcome message -->
+                        <div class="message system-msg">
+                            <div class="bot-avatar-inner">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div class="message-bubble">
+                                <p>Welcome to the <strong>Sri Eshwar College of Engineering (SECE)</strong> Smart RAG Chatbot!</p>
+                                <p>I am connected directly to the SECE institutional knowledge database. I answer questions using a FAISS vector database and Groq Llama 3.3. I am constrained to only answer from my database.</p>
+                                <p>Get started by asking a question or selecting one of the suggested prompts below:</p>
+                                
+                                <div class="quick-prompts-grid">
+                                    <button class="prompt-btn" data-question="Where is SECE located and what is its TNEA code?">
+                                        <i class="fa-solid fa-location-dot"></i> Location & TNEA Code
+                                    </button>
+                                    <button class="prompt-btn" data-question="What engineering departments are offered at Sri Eshwar College of Engineering?">
+                                        <i class="fa-solid fa-gears"></i> Departments List
+                                    </button>
+                                    <button class="prompt-btn" data-question="How can I get admission to SECE for the 2025 academic year?">
+                                        <i class="fa-solid fa-id-card"></i> Admission 2025 Open
+                                    </button>
+                                    <button class="prompt-btn" data-question="Where can students access the academic ERP and what curricula are followed?">
+                                        <i class="fa-solid fa-book-open"></i> Curriculum & ERP Portal
+                                    </button>
+                                    <button class="prompt-btn" data-question="What are the placements like and who are the top recruiters?">
+                                        <i class="fa-solid fa-briefcase"></i> Placements & recruiters
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Input Area -->
+                    <form class="chat-input-form" id="chat-form">
+                        <div class="input-container">
+                            <input 
+                                type="text" 
+                                id="chat-input" 
+                                placeholder="Type your question about SECE here..." 
+                                autocomplete="off" 
+                                required
+                            >
+                            <button type="submit" class="send-btn" id="send-button">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Right Side: FAISS Vector Inspection Panel -->
+            <aside class="inspector-section" id="inspector-panel">
+                <div class="inspector-header">
+                    <div class="inspector-title">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                        <h2>FAISS Retrieval Inspector</h2>
+                    </div>
+                    <button class="close-inspector-btn" id="close-inspector" aria-label="Close Inspector">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <div class="inspector-content" id="inspector-content-area">
+                    <div class="empty-inspector-state">
+                        <div class="state-icon">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <h3>No query submitted yet</h3>
+                        <p>When you ask a question, the top 4 matched text chunks retrieved from the FAISS database and their cosine similarity scores will be displayed here in real time.</p>
+                    </div>
+                </div>
+            </aside>
+        </main>
+        
+        <!-- Toggle inspector button for smaller screens -->
+        <button class="inspector-toggle-btn" id="toggle-inspector" title="Toggle Retrieval Inspector">
+            <i class="fa-solid fa-database"></i>
+        </button>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
