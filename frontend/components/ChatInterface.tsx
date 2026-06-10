@@ -115,7 +115,7 @@ export default function ChatInterface() {
       const errorMessage: Message = {
         id: `error-${Date.now()}`,
         sender: "assistant",
-        text: "I encountered an error connecting to the server. Please ensure the backend is running locally at http://localhost:8000.",
+        text: "The server is warming up or temporarily unavailable. Please wait 30 seconds and try again.",
         timestamp: new Date()
       };
       setMessages((prev) => [...prev, errorMessage]);

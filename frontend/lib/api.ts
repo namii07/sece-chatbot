@@ -20,22 +20,37 @@ export interface HealthResponse {
 }
 
 export async function sendChatMessage(message: string): Promise<ChatResponse> {
-  const response = await fetch(`${BASE}/api/chat`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message }),
-  });
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Failed to send message: ${response.statusText}. ${errorText}`);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 60000); // 60s timeout for cold starts
+  try {
+    const response = await fetch(`${BASE}/api/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message }),
+      signal: controller.signal,
+    });
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to send message: ${response.statusText}. ${errorText}`);
+    }
+    return response.json();
+  } finally {
+    clearTimeout(timeout);
   }
-  return response.json();
 }
 
 export async function checkBackendHealth(): Promise<HealthResponse> {
-  const response = await fetch(`${BASE}/api/health`);
-  if (!response.ok) {
-    throw new Error(`Failed to verify health: ${response.statusText}`);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000); // 30s timeout
+  try {
+    const response = await fetch(`${BASE}/api/health`, {
+      signal: controller.signal,
+    });
+    if (!response.ok) {
+      throw new Error(`Failed to verify health: ${response.statusText}`);
+    }
+    return response.json();
+  } finally {
+    clearTimeout(timeout);
   }
-  return response.json();
 }
