@@ -6,8 +6,9 @@ __pycache__/
 venv/
 .venv/
 
-# FAISS index (pre-built locally, commit only when ready)
-# index/
+# FAISS index — pre-built assets are committed so Vercel loads them directly
+!index/index.faiss
+!index/metadata.json
 
 # Node
 node_modules/

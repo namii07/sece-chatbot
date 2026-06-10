@@ -1,3 +1,5 @@
+const BASE = process.env.NEXT_PUBLIC_BACKEND_URL ?? "";
+
 export interface SourceItem {
   chunk_id: string;
   text: string;
@@ -17,31 +19,21 @@ export interface HealthResponse {
   api_key_configured: boolean;
 }
 
-/**
- * Sends a message to the FastAPI backend and retrieves the answer and search details.
- */
 export async function sendChatMessage(message: string): Promise<ChatResponse> {
-  const response = await fetch("/api/chat", {
+  const response = await fetch(`${BASE}/api/chat`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ message }),
   });
-
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(`Failed to send message: ${response.statusText}. ${errorText}`);
   }
-
   return response.json();
 }
 
-/**
- * Checks the status of the RAG backend (model key loaded, FAISS vector loaded).
- */
 export async function checkBackendHealth(): Promise<HealthResponse> {
-  const response = await fetch("/api/health");
+  const response = await fetch(`${BASE}/api/health`);
   if (!response.ok) {
     throw new Error(`Failed to verify health: ${response.statusText}`);
   }
